@@ -12,4 +12,11 @@ export default defineNuxtConfig({
       },
     },
   },
+  tailwindcss: {
+    config: {
+      safelist: [
+        'bg-[#ffa100]'
+      ]
+    },
+  }
 });

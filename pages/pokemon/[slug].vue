@@ -18,6 +18,12 @@ const query = gql`
           }
         )
       }
+      pointDeVie
+      mass
+      height
+      color {
+        hex
+      }
     }
   }
 `;
@@ -50,6 +56,12 @@ pokemon.value = data.value.pokemon;
     <NuxtImg class="" :src="pokemon.image.url" :alt="pokemon.nom" />
     <h2 class="text-3xl text-center">{{ pokemon.nom }}</h2>
     <p class="text-justify text-red-950">{{ pokemon.description }}</p>
+    <p class="text-justify text-red-950">{{ pokemon.height }}</p>
+    <p class="text-justify text-red-950">{{ pokemon.mass }}</p>
+    <p class="text-justify text-red-950">{{ pokemon.color.hex }}</p>
+    <div class="h-6 w-6" :class="`bg-[${pokemon.color.hex}]`"></div>
+    <p class="text-justify text-red-950">{{ pokemon.pointDeVie }}</p>
+    <p class="text-justify text-red-950">{{ pokemon.typesDePokemon }}</p>
   </div>
   <div v-else>
     <li>Loading...</li>
