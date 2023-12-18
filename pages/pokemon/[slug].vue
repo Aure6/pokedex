@@ -66,7 +66,7 @@ pokemon.value = data.value.pokemon;
     <p class="text-justify text-red-950">Taille: {{ pokemon.height }} mètres</p>
     <p class="text-justify text-red-950">Masse: {{ pokemon.mass }} kg</p>
     <p class="text-justify text-red-950">Couleur (hex): {{ pokemon.color.hex }}</p>
-    <!-- ajouter la couleur dans tsconfig.json pour pouvoir la charger dynamiquement, sinon se servir d'une balise html "style" remplie de CSS pure -->
+    <!-- ajouter la couleur dans tsconfig.json pour pouvoir la charger dynamiquement, sinon se servir d'une balise html "style" inline remplie de CSS pure -->
     <div class="h-6 w-6" :class="`bg-[${pokemon.color.hex}]`"></div>
     <p class="text-justify text-red-950">{{ pokemon.pointDeVie }} points de vie</p>
     <p class="text-justify text-red-950">Type de pokemon: {{ pokemon.typesDePokemon.nom }}</p>
