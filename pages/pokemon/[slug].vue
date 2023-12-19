@@ -72,16 +72,22 @@ console.log(pokemon?.typesDePokemon);
     <p class="text-justify text-red-950">{{ pokemon?.pointDeVie }} points de vie</p>
     <!-- v-for pour les types de pokemon -->
     <section>
-      <p class="text-justify text-red-950">Type(s) de pokemon: {{ pokemon?.typesDePokemon?.nom }}</p>
+      <p class="text-justify text-red-950">Type(s) du pokemon: {{ pokemon?.typesDePokemon?.nom }}</p>
       <ul>
         <li v-for="cat in pokemon?.typesDePokemon" :key="cat?.id" class="text-justify text-red-950">
           {{ cat?.nom }}
         </li>
       </ul>
     </section>
-
     <!-- v-for pour les attaques -->
-    <!-- todo -->
+    <section>
+      <!-- <p class="text-justify text-red-950">Attaque(s) du pokemon: {{ pokemon?.typesDePokemon?.nom }}</p>
+      <ul>
+        <li v-for="cat in pokemon?.typesDePokemon" :key="cat?.id" class="text-justify text-red-950">
+          {{ cat?.nom }}
+        </li>
+      </ul> -->
+    </section>
   </div>
   <div v-else>
     <li>Loading...</li>

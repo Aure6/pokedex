@@ -50,10 +50,8 @@ const selectedPokemonQuery = gql`
       hex
     }
     typesDePokemon {
-      ... on TypeDePokemon {
-        id
-        nom
-      }
+      id
+      nom
     }
   }
 }
