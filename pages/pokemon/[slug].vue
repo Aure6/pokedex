@@ -22,10 +22,8 @@ const query = gql`
       hex
     }
     typesDePokemon {
-      ... on TypeDePokemon {
-        id
-        nom
-      }
+      id
+      nom
     }
   }
 }
@@ -38,6 +36,9 @@ const { data } = await useAsyncQuery(query, {
 });
 console.log(data.value);
 pokemon.value = data.value.pokemon;
+
+console.log(pokemon?.typesDePokemon?.nom);
+console.log(pokemon?.typesDePokemon);
 </script>
 
 <template>
@@ -69,7 +70,18 @@ pokemon.value = data.value.pokemon;
     <!-- ajouter la couleur dans tsconfig.json pour pouvoir la charger dynamiquement, sinon se servir d'une balise html "style" inline remplie de CSS pure -->
     <div class="h-6 w-6" :class="`bg-[${pokemon?.color.hex}]`"></div>
     <p class="text-justify text-red-950">{{ pokemon?.pointDeVie }} points de vie</p>
-    <p class="text-justify text-red-950">Type de pokemon: {{ pokemon?.typesDepokemon?.nom }}</p>
+    <!-- v-for pour les types de pokemon -->
+    <section>
+      <p class="text-justify text-red-950">Type(s) de pokemon: {{ pokemon?.typesDePokemon?.nom }}</p>
+      <ul>
+        <li v-for="cat in pokemon?.typesDePokemon" :key="cat?.id" class="text-justify text-red-950">
+          {{ cat?.nom }}
+        </li>
+      </ul>
+    </section>
+
+    <!-- v-for pour les attaques -->
+    <!-- todo -->
   </div>
   <div v-else>
     <li>Loading...</li>
