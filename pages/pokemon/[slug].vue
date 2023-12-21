@@ -25,6 +25,20 @@ const query = gql`
       id
       nom
     }
+    attaques {
+      nom
+      description
+      degats
+      image {
+        url(
+          transformation: {image: {resize: {fit: crop, height: 64, width: 64}}, document: {output: {format: webp}}}
+        )
+      }
+      typeDePokemon {
+        id
+        nom
+      }
+    }
   }
 }
 `;
@@ -73,7 +87,7 @@ console.log(pokemon?.typesDePokemon);
     <!-- v-for pour les types de pokemon -->
     <section>
       <p class="text-justify text-red-950">Type(s) du pokemon: {{ pokemon?.typesDePokemon?.nom }}</p>
-      <ul>
+      <ul class="list-disc">
         <li v-for="cat in pokemon?.typesDePokemon" :key="cat?.id" class="text-justify text-red-950">
           {{ cat?.nom }}
         </li>
@@ -81,12 +95,15 @@ console.log(pokemon?.typesDePokemon);
     </section>
     <!-- v-for pour les attaques -->
     <section>
-      <!-- <p class="text-justify text-red-950">Attaque(s) du pokemon: {{ pokemon?.typesDePokemon?.nom }}</p>
-      <ul>
-        <li v-for="cat in pokemon?.typesDePokemon" :key="cat?.id" class="text-justify text-red-950">
-          {{ cat?.nom }}
+      <div class="text-justify text-red-950">Attaque(s) du pokemon: {{ pokemon?.typesDePokemon?.nom }}</div>
+      <ul class="list-disc">
+        <li v-for="attaque in pokemon?.attaques" :key="attaque?.id" class="text-justify text-red-950">
+          <NuxtImg class="inline-flex shadow-2xl rounded-lg" :src="attaque?.image.url" :alt="attaque?.nom" />
+          {{ attaque?.nom }}: {{ attaque?.description }}
+          Dégâts: {{ attaque?.degats }}
+          <div>Type de l'attaque: {{ attaque?.typeDePokemon.nom }}</div>
         </li>
-      </ul> -->
+      </ul>
     </section>
   </div>
   <div v-else>
