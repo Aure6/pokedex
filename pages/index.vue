@@ -12,8 +12,10 @@
 //   };
 // }
 
-// pokemon list logic
-// pokemon lists query
+/**
+* pokemons list
+*/
+// pokemons list query
 const query = gql`
   query Pokemons {
     pokemons(orderBy: id_ASC) {
@@ -61,14 +63,13 @@ const query = gql`
 const pokemons = ref();
 // fetch data asynchronously using useAsyncQuery and destructure the data property from the result
 const { data } = await useAsyncQuery(query);
-console.log(data.value);
-console.log(typeof data.value);
 // assign the "pokemons" reference to the pokemons property of "data.value"
 pokemons.value = data.value.pokemons;
-console.log(typeof pokemons.value);
 
-// selected pokemon logic
-// create a reactive reference called "selectedPokemon" and initialize it to null
+/**
+* selected pokemon
+*/
+// create a reactive reference called "selectedPokemon"
 const selectedPokemon = ref();
 
 /**
