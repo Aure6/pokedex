@@ -22,10 +22,10 @@
             class="container mx-auto px-3 h-24 flex items-center mb-4 shadow-2xl rounded-b-2xl bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] from-red-500 to-red-900">
             <!-- there was mb-10 -->
             <NuxtLink to="/">
-                <h1 class="text-5xl font-serif">Pokedex</h1>
+                <h1 class="font-serif text-5xl">Pokedex</h1>
             </NuxtLink>
         </nav>
-        <div class="container mx-auto px-3 pb-4">
+        <div class="container px-3 pb-4 mx-auto">
             <slot />
         </div>
     </div>

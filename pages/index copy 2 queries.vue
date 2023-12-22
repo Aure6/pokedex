@@ -92,7 +92,7 @@ const selectedPokemonQuery = gql`
 
 <template>
   <div class="flex">
-    <ul v-if="pokemons" class="w-1/2 grid gap-8 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6">
+    <ul v-if="pokemons" class="grid w-1/2 grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6">
       <!-- TODO Search bar + dropdown with types of pokemon-->
       <li v-for="pokemon in pokemons" :key="pokemon?.id">
         <button @click="selectPokemon(pokemon?.slug)">
@@ -105,8 +105,8 @@ const selectedPokemonQuery = gql`
       <li>Loading...</li>
     </ul>
     <!-- selected pokemon query -->
-    <div v-if="selectedPokemon" class="w-1/2 space-y-4 mx-auto">
-      <aside class="lg:float-right lg:clear-right space-y-4 mb-4 lg:mx-4 mx-auto">
+    <div v-if="selectedPokemon" class="w-1/2 mx-auto space-y-4">
+      <aside class="mx-auto mb-4 space-y-4 lg:float-right lg:clear-right lg:mx-4">
         <!-- TODO -->
       </aside>
       <h2>{{ selectedPokemonData?.nom }}</h2>
