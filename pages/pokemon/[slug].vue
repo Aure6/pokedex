@@ -70,11 +70,11 @@ console.log(pokemon?.typesDePokemon);
     <Meta name="twitter:image" :content="pokemon?.image.url" />
   </Head>
 
-  <div v-if="pokemon" class="max-w-7xl space-y-4 mx-auto"> <!-- there was max-w-lg  -->
-    <aside class="lg:float-right lg:clear-right space-y-4 mb-4 lg:mx-4 mx-auto">
+  <div v-if="pokemon" class="mx-auto space-y-4 max-w-7xl"> <!-- there was max-w-lg  -->
+    <aside class="mx-auto mb-4 space-y-4 lg:float-right lg:clear-right lg:mx-4">
       <h2 class="text-3xl text-center">{{ pokemon?.nom }}</h2>
       <figure>
-        <NuxtImg class="shadow-2xl rounded-lg mx-auto" :src="pokemon?.image.url" :alt="pokemon?.nom" />
+        <NuxtImg class="mx-auto rounded-lg shadow-2xl" :src="pokemon?.image.url" :alt="pokemon?.nom" />
       </figure>
     </aside>
     <p class="text-justify text-red-950">{{ pokemon?.description }}</p>
@@ -82,7 +82,7 @@ console.log(pokemon?.typesDePokemon);
     <p class="text-justify text-red-950">Masse: {{ pokemon?.mass }} kg</p>
     <p class="text-justify text-red-950">Couleur (hex): {{ pokemon?.color.hex }}</p>
     <!-- ajouter la couleur dans tsconfig.json pour pouvoir la charger dynamiquement, sinon se servir d'une balise html "style" inline remplie de CSS pure -->
-    <div class="h-6 w-6" :class="`bg-[${pokemon?.color.hex}]`"></div>
+    <div class="w-6 h-6" :class="`bg-[${pokemon?.color.hex}]`"></div>
     <p class="text-justify text-red-950">Points de vie: {{ pokemon?.pointDeVie }}</p>
     <!-- v-for pour les types de pokemon -->
     <section>
@@ -98,7 +98,7 @@ console.log(pokemon?.typesDePokemon);
       <div class="text-justify text-red-950">Attaque(s) du pokemon: {{ pokemon?.typesDePokemon?.nom }}</div>
       <ul class="list-disc">
         <li v-for="attaque in pokemon?.attaques" :key="attaque?.id" class="text-justify text-red-950">
-          <NuxtImg class="inline-flex shadow-2xl rounded-lg" :src="attaque?.image.url" :alt="attaque?.nom" />
+          <NuxtImg class="inline-flex rounded-lg shadow-2xl" :src="attaque?.image.url" :alt="attaque?.nom" />
           {{ attaque?.nom }}: {{ attaque?.description }}
           Dégâts: {{ attaque?.degats }}
           <div>Type de l'attaque: {{ attaque?.typeDePokemon.nom }}</div>

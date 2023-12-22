@@ -126,8 +126,8 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div class="flex sm:flex-row flex-col">
-    <ul v-if="pokemons" class="sm:w-1/2 grid gap-8 grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6">
+  <div class="flex flex-col sm:flex-row">
+    <ul v-if="pokemons" class="grid grid-cols-2 gap-8 sm:w-1/2 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6">
       <!-- TODO Search bar + dropdown with types of pokemon-->
       <li v-for="pokemon in pokemons" :key="pokemon?.id">
         <button @click="selectPokemon(pokemon?.slug);">
@@ -142,8 +142,8 @@ watchEffect(() => {
     <!-- selected pokemon div -->
     <!-- this div is hidden until a pokemon is selected -->
     <!-- when a pokemon is selected this div shows its data -->
-    <div v-if="selectedPokemon" class="sm:w-1/2 flex flex-col items-center space-y-4 mx-auto sm:order-none order-first">
-      <h2 class="uppercase text-justify text-red-950 font-extrabold text-2xl">{{
+    <div v-if="selectedPokemon" class="flex flex-col items-center order-first mx-auto space-y-4 sm:w-1/2 sm:order-none">
+      <h2 class="text-2xl font-extrabold text-justify uppercase text-red-950">{{
         selectedPokemon?.nom }}
       </h2>
       <p class="text-justify text-red-950">{{ selectedPokemon?.description }}</p>
