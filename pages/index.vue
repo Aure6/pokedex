@@ -1,21 +1,8 @@
-<script setup>
-// @ts-check
-
-// create an interface for the pokemon object
-// interface Pokemon {
-//   id: string;
-//   name: string;
-//   age: number;
-//   address: string;
-//   image: {
-//     url: string;
-//   };
-// }
+<script setup lang="ts">
 
 /**
 * pokemons list
 */
-// pokemons list query
 const query = gql`
   query Pokemons {
     pokemons(orderBy: id_ASC) {
@@ -29,7 +16,7 @@ const query = gql`
     stage
     image {
       url(
-        transformation: {image: {resize: {fit: crop, height: 1024, width: 1024}}, document: {output: {format: webp}}}
+        transformation: {image: {resize: {fit: crop, height: 256, width: 256}}, document: {output: {format: webp}}}
       )
     }
     pointDeVie
@@ -59,41 +46,17 @@ const query = gql`
     }
   }
 `;
-// create a reactive reference called "pokemons"
 const pokemons = ref();
-// fetch data asynchronously using useAsyncQuery and destructure the data property from the result
-const { data } = await useAsyncQuery(query);
-// assign the "pokemons" reference to the pokemons property of "data.value"
+const { data }: any = await useAsyncQuery(query);
 pokemons.value = data.value.pokemons;
 
 /**
 * selected pokemon
 */
-// create a reactive reference called "selectedPokemon"
-const selectedPokemon = ref();
-
-/**
-* @param {string} pokemonSlug
-*/
-function selectPokemon(pokemonSlug) {
-  // loop through the pokemons array and find the pokemon object that matches the pokemonSlug parameter
-  for (const pokemon of pokemons.value) {
-    console.log(pokemon.slug);
-    if (pokemon.slug === pokemonSlug) {
-      // assign the pokemon object to the selectedPokemon reference
-      selectedPokemon.value = pokemon;
-      // break the loop
-      break;
-    };
-  }
-};
-
-// second query to fetch the larger image for the selected pokemon, using the same transformation argument
-// We need to query the other fields once again and not just the image, because the POKEMON query expects a Pokemon object as a return type, and a Pokemon object has more fields than just the image. If we only query the image, we will get an error from the GraphQL server saying that we are missing some fields.
+// second query to fetch the larger image for the selected pokemon
 const largeImageQuery = gql`
 query Pokemon($slug: String!) {
   pokemon(where: { slug: $slug }) {
-    # other fields
     image {
       url(
         transformation: {
@@ -105,6 +68,35 @@ query Pokemon($slug: String!) {
   }
 }
 `;
+const selectedPokemon = ref();
+const selectedPokemonImage = ref();
+
+// cette fonction utilise la requête de la liste avec les images petites
+async function selectPokemon(pokemonSlug: string) {
+  for (const pokemon of pokemons.value) {
+    if (pokemon.slug === pokemonSlug) {
+      selectedPokemon.value = pokemon;
+      const { data }: any = await useAsyncQuery(largeImageQuery, {
+        slug: pokemonSlug,
+      });
+      selectedPokemonImage.value = data.value.pokemon.image;
+      break;
+    };
+  }
+};
+
+// cette fonction utilise la requête de la liste avec les images petites
+/* function selectPokemon(pokemonSlug: string) {
+  for (const pokemon of pokemons.value) {
+    console.log(pokemon.slug);
+    if (pokemon.slug === pokemonSlug) {
+      selectedPokemon.value = pokemon;
+      break;
+    };
+  }
+}; */
+
+
 
 // create a reactive reference called "pokemonImage" and initialize it to null
 /* const pokemonImage = ref(null);
@@ -127,19 +119,40 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div class="flex flex-col sm:flex-row">
-    <ul v-if="pokemons" class="grid grid-cols-2 gap-8 sm:w-1/2 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6">
-      <!-- TODO Search bar + dropdown with types of pokemon-->
-      <li v-for="pokemon in pokemons" :key="pokemon?.id">
-        <button @click="selectPokemon(pokemon?.slug);">
-          <NuxtImg :src="pokemon?.image.url" :alt="pokemon?.nom" />
-          <h2 class="text-3xl text-center">{{ pokemon?.nom }}</h2>
-        </button>
-      </li>
-    </ul>
-    <ul v-else>
-      <li>Loading...</li>
-    </ul>
+  <div class="flex flex-col gap-8 sm:flex-row">
+    <div class="space-y-4 sm:w-1/2">
+      <!-- TODO Search bar -->
+      <div class="flex flex-col justify-center gap-4 2xl:flex-row ">
+        <div class="mx-auto space-y-4">
+          <label class="block">
+            Rechercher par nom de pokémon:
+            <input class="w-full p-1 bg-yellow-400 rounded-lg sm:w-auto" type="search" id="query" autofocus
+              placeholder="Nom du pokémon" />
+          </label>
+          <!-- TODO DROPDOWN WITH TYPes of pokemons -->
+          <label class="block">
+            Type de pokémon:
+            <select id="type_de_pokemon" name="type_de_pokemon" class="p-1 bg-yellow-400 rounded-lg">
+              <option v-for="pokemon in pokemons" :key="pokemon?.typesDePokemon.id" :value="pokemon?.typesDePokemon.nom">
+                {{ pokemon?.typesDePokemon.nom }}</option>
+              <option value="volvo">Volvo</option>
+            </select>
+          </label>
+        </div>
+      </div>
+      <!-- list of pokemons -->
+      <ul v-if="pokemons" class="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6">
+        <li v-for="pokemon in pokemons" :key="pokemon?.id">
+          <button @click="selectPokemon(pokemon?.slug);">
+            <NuxtImg :src="pokemon?.image.url" :alt="pokemon?.nom" />
+            <h2 class="text-3xl text-center">{{ pokemon?.nom }}</h2>
+          </button>
+        </li>
+      </ul>
+      <ul v-else>
+        <li>Loading...</li>
+      </ul>
+    </div>
     <!-- selected pokemon div -->
     <!-- this div is hidden until a pokemon is selected -->
     <!-- when a pokemon is selected this div shows its data -->
@@ -148,14 +161,15 @@ watchEffect(() => {
         selectedPokemon?.nom }}
       </h2>
       <p class="text-justify text-red-950">{{ selectedPokemon?.description }}</p>
-      <NuxtImg :src="selectedPokemon?.image.url" :alt="selectedPokemon?.nom" />
-      <!-- use the pokemonImage reference to display the larger image for the selected pokemon from the query that gets a larger image -->
-      <!-- <NuxtImg :src="pokemonImage" :alt="selectedPokemon?.nom" /> -->
-      <!-- TODO -->
+      <!-- <NuxtImg :src="selectedPokemon?.image.url" :alt="selectedPokemon?.nom" /> -->
+      <!-- the selectedPokemonImage reference displays the larger image for the selected pokemon from the query that gets a larger image -->
+      <NuxtImg v-if="selectedPokemonImage" :src="selectedPokemonImage.url" :alt="selectedPokemon?.nom" />
+      <div v-else>
+        L'image en haute définition est en cours de chargement...
+      </div>
     </div>
     <div v-else>
       <p class="text-justify text-red-950">S'il vous plait sélectionnez un pokémon de la liste.</p>
-      <!-- <p>Please select a pokemon from the list.</p> -->
     </div>
   </div>
 </template>
