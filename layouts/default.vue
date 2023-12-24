@@ -19,11 +19,14 @@
 
     <div class="min-h-screen bg-red-500">
         <nav
-            class="container mx-auto px-3 h-24 flex items-center mb-4 shadow-2xl rounded-b-2xl bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] from-red-500 to-red-900">
+            class="container mx-auto px-3 h-24 flex items-center mb-4 shadow-2xl rounded-b-2xl bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] from-red-500 to-red-900 justify-center gap-4">
             <!-- there was mb-10 -->
             <NuxtLink to="/">
                 <h1 class="font-serif text-5xl">Pokedex</h1>
             </NuxtLink>
+            <div>
+                Encyclopédie de créatures fictives
+            </div>
         </nav>
         <div class="container px-3 pb-4 mx-auto">
             <slot />

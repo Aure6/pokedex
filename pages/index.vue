@@ -35,7 +35,7 @@ const query = gql`
       degats
       image {
         url(
-          transformation: {image: {resize: {fit: crop, height: 64, width: 64}}, document: {output: {format: webp}}}
+          transformation: {image: {resize: {fit: crop, height: 32, width: 32}}, document: {output: {format: webp}}}
         )
       }
       typeDePokemon {
@@ -126,13 +126,13 @@ watchEffect(() => {
         <div class="mx-auto space-y-4">
           <label class="block">
             Rechercher par nom de pokémon:
-            <input class="w-full p-1 bg-yellow-400 rounded-lg sm:w-auto" type="search" id="query" autofocus
+            <input class="w-full p-1 bg-yellow-500 rounded-lg sm:w-auto" type="search" id="query" autofocus
               placeholder="Nom du pokémon" />
           </label>
           <!-- TODO DROPDOWN WITH TYPes of pokemons -->
           <label class="block">
             Type de pokémon:
-            <select id="type_de_pokemon" name="type_de_pokemon" class="p-1 bg-yellow-400 rounded-lg">
+            <select id="type_de_pokemon" name="type_de_pokemon" class="p-1 bg-yellow-500 rounded-lg">
               <option v-for="pokemon in pokemons" :key="pokemon?.typesDePokemon.id" :value="pokemon?.typesDePokemon.nom">
                 {{ pokemon?.typesDePokemon.nom }}</option>
               <option value="volvo">Volvo</option>
@@ -143,9 +143,16 @@ watchEffect(() => {
       <!-- list of pokemons -->
       <ul v-if="pokemons" class="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6">
         <li v-for="pokemon in pokemons" :key="pokemon?.id">
-          <button @click="selectPokemon(pokemon?.slug);">
+          <button @click="selectPokemon(pokemon?.slug);"
+            class="hover:bg-yellow-500 hover:ring-8 hover:ring-yellow-400 hover:rounded-xl">
             <NuxtImg :src="pokemon?.image.url" :alt="pokemon?.nom" />
-            <h2 class="text-3xl text-center">{{ pokemon?.nom }}</h2>
+            <h2 class="text-lg text-center">{{ pokemon?.nom }}</h2>
+            <ul>
+              <li v-for="cat in pokemon?.typesDePokemon" :key="cat?.id"
+                class="inline-block w-auto text-justify bg-yellow-400 rounded-lg text-red-950">
+                {{ cat?.nom }}
+              </li>
+            </ul>
           </button>
         </li>
       </ul>
@@ -160,13 +167,40 @@ watchEffect(() => {
       <h2 class="text-2xl font-extrabold text-justify uppercase text-red-950">{{
         selectedPokemon?.nom }}
       </h2>
-      <p class="text-justify text-red-950">{{ selectedPokemon?.description }}</p>
       <!-- <NuxtImg :src="selectedPokemon?.image.url" :alt="selectedPokemon?.nom" /> -->
       <!-- the selectedPokemonImage reference displays the larger image for the selected pokemon from the query that gets a larger image -->
       <NuxtImg v-if="selectedPokemonImage" :src="selectedPokemonImage.url" :alt="selectedPokemon?.nom" />
       <div v-else>
         L'image en haute définition est en cours de chargement...
       </div>
+      <div class="text-justify text-red-950">{{ selectedPokemon?.description }}</div>
+      <div class="text-justify text-red-950">Taille: {{ selectedPokemon?.height }} mètres</div>
+      <div class="text-justify text-red-950">Masse: {{ selectedPokemon?.mass }} kg</div>
+      <div class="text-justify text-red-950">Couleur (hex): {{ selectedPokemon?.color.hex }}</div>
+      <!-- ajouter la couleur dans tsconfig.json pour pouvoir la charger dynamiquement, sinon se servir d'une balise html "style" inline remplie de CSS pure -->
+      <div class="w-6 h-6" :class="`bg-[${selectedPokemon?.color.hex}]`"></div>
+      <div class="text-justify text-red-950">Points de vie: {{ selectedPokemon?.pointDeVie }}</div>
+      <!-- v-for pour les types de pokemon -->
+      <section>
+        <p class="text-justify text-red-950">Type(s) du pokemon: {{ selectedPokemon?.typesDePokemon?.nom }}</p>
+        <ul class="list-disc">
+          <li v-for="cat in selectedPokemon?.typesDePokemon" :key="cat?.id" class="text-justify text-red-950">
+            {{ cat?.nom }}
+          </li>
+        </ul>
+      </section>
+      <!-- v-for pour les attaques -->
+      <section>
+        <div class="text-justify text-red-950">Attaque(s) du pokémon: {{ selectedPokemon?.typesDePokemon?.nom }}</div>
+        <ul class="list-disc">
+          <li v-for="attaque in selectedPokemon?.attaques" :key="attaque?.id" class="text-justify text-red-950">
+            <NuxtImg class="inline-flex rounded-lg shadow-2xl" :src="attaque?.image.url" :alt="attaque?.nom" />
+            {{ attaque?.nom }}: {{ attaque?.description }}
+            Dégâts: {{ attaque?.degats }}
+            Type de l'attaque: <span class="">{{ attaque?.typeDePokemon.nom }}</span>
+          </li>
+        </ul>
+      </section>
     </div>
     <div v-else>
       <p class="text-justify text-red-950">S'il vous plait sélectionnez un pokémon de la liste.</p>
