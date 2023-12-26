@@ -122,7 +122,22 @@ async function main() {
 }
 main();
 
-defineProps(['selectedType']);
+// Filtrage des pokémons par type (dropdown) et par le nom (input type search)
+const selectedType = ref('Tout type');
+const searchQuery = ref('');
+const updateSelectedType = (event: { target: any }) => {
+  selectedType.value = event.target.value;
+};
+const filteredPokemons = computed(() => {
+  return pokemons.value.filter((pokemon: { typesDePokemon: any[]; nom: string; }) => {
+    // Filtrage par type
+    const filterByType = selectedType.value === 'Tout type' || pokemon.typesDePokemon.some((type: { id: string; }) => type.id === selectedType.value);
+    // Filtrage par nom
+    const filterByName = !searchQuery.value || pokemon.nom.toLowerCase().includes(searchQuery.value.toLowerCase());
+    // Appliquer les deux filtres
+    return filterByType && filterByName;
+  });
+});
 </script>
 
 <template>
@@ -133,13 +148,14 @@ defineProps(['selectedType']);
         <div class="mx-auto space-y-4">
           <label class="block">
             Rechercher par nom de pokémon:
-            <input class="w-full p-1 placeholder-gray-400 bg-yellow-500 rounded-lg sm:w-auto" type="search"
-              id="searchQuery" autofocus placeholder="Nom du pokémon" />
+            <input v-model="searchQuery" class="w-full p-1 placeholder-gray-400 bg-yellow-500 rounded-lg sm:w-auto"
+              type="search" id="searchQuery" autofocus placeholder="Nom du pokémon" />
           </label>
-          <!-- TODO dropdown type de pokemons -->
+          <!-- dropdown type de pokemons -->
           <label class="block">
             Type de pokémon:
-            <select model="selectedType" id="type_de_pokemon" name="type_de_pokemon" class="p-1 bg-yellow-500 rounded-lg">
+            <select @change="updateSelectedType" id="type_de_pokemon" name="type_de_pokemon"
+              class="p-1 bg-yellow-500 rounded-lg">
               <option>Tout type</option>
               <option v-for="pokemonType in pokemonTypes" :key="pokemonType.id" :value="pokemonType.id"
                 :style="{ 'background-color': pokemonType.couleur.css }">
@@ -150,8 +166,8 @@ defineProps(['selectedType']);
         </div>
       </div>
       <!-- list of pokemons -->
-      <ul v-if="pokemons" class="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6">
-        <li v-for="pokemon in pokemons" :key="pokemon?.id">
+      <ul v-if="filteredPokemons" class="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6">
+        <li v-for="pokemon in filteredPokemons" :key="pokemon?.id">
           <button @click="selectPokemon(pokemon?.slug);"
             class="hover:bg-yellow-500 hover:ring-8 hover:ring-yellow-400 hover:rounded-xl">
             <NuxtImg :src="pokemon?.image.url" :alt="pokemon?.nom" />
