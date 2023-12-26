@@ -96,26 +96,43 @@ async function selectPokemon(pokemonSlug: string) {
   }
 }; */
 
-
-
-// create a reactive reference called "pokemonImage" and initialize it to null
-/* const pokemonImage = ref(null);
-
-// import the useQuery function and the POKEMON query
-import { useQuery } from "@vue/apollo-composable";
-import { POKEMON } from "../graphql-operations";
-
-// use the useQuery function to create a query object, passing the POKEMON query and the pokemonSlug parameter as arguments
-const { data: pokemonData } = useQuery(POKEMON, () => ({
-  slug: selectedPokemon.value.slug,
-}));
-
-// use a watchEffect hook to assign the pokemonImage reference to the image.url property of the pokemonData.value.pokemon object
-watchEffect(() => {
-  if (pokemonData.value) {
-    pokemonImage.value = pokemonData.value.pokemon.image.url;
+// list of pokemon types
+const pokemonTypesQuery = gql`
+query pokemonTypesQuery {
+  typesDePokemon {
+    nom
+    id
+    couleur {
+      css
+    }
   }
-}); */
+}
+`;
+const pokemonTypes = ref();
+// const { pokemonTypesData }: any = await useAsyncQuery(pokemonTypesQuery);
+// console.log(pokemonTypesData.value);
+// console.log(pokemonTypesQuery.value);
+// pokemonTypes.value = pokemonTypesData.value.typesDePokemon;
+
+// Declare an async function that returns a promise
+async function getPokemonTypesData() {
+  // Wait for the query to finish and get the data
+  const { data }: any = await useAsyncQuery(pokemonTypesQuery);
+  // Return the data
+  return data;
+}
+
+// Call the async function and use the data
+async function main() {
+  // Wait for the data to be available
+  const data = await getPokemonTypesData();
+  // Use the data
+  pokemonTypes.value = data.value.typesDePokemon;
+  console.log(pokemonTypes.value);
+}
+
+// Invoke the main function
+main();
 </script>
 
 <template>
@@ -129,13 +146,13 @@ watchEffect(() => {
             <input class="w-full p-1 bg-yellow-500 rounded-lg sm:w-auto" type="search" id="query" autofocus
               placeholder="Nom du pokémon" />
           </label>
-          <!-- TODO DROPDOWN WITH TYPes of pokemons -->
+          <!-- TODO dropdown type de pokemons -->
           <label class="block">
             Type de pokémon:
             <select id="type_de_pokemon" name="type_de_pokemon" class="p-1 bg-yellow-500 rounded-lg">
-              <option v-for="pokemon in pokemons" :key="pokemon?.typesDePokemon.id" :value="pokemon?.typesDePokemon.nom">
-                {{ pokemon?.typesDePokemon.nom }}</option>
-              <option value="volvo">Volvo</option>
+              <option v-for="pokemonType in pokemonTypes" :key="pokemonType.id" :value="pokemonType.id">
+                {{ pokemonType.nom }}
+              </option>
             </select>
           </label>
         </div>
@@ -149,7 +166,7 @@ watchEffect(() => {
             <h2 class="text-lg text-center">{{ pokemon?.nom }}</h2>
             <ul>
               <li v-for="cat in pokemon?.typesDePokemon" :key="cat?.id"
-                class="inline-block w-auto text-justify bg-yellow-400 rounded-lg text-red-950">
+                class="inline-block w-auto p-1 text-justify bg-yellow-400 rounded-lg text-red-950">
                 {{ cat?.nom }}
               </li>
             </ul>
@@ -197,7 +214,7 @@ watchEffect(() => {
             <NuxtImg class="inline-flex rounded-lg shadow-2xl" :src="attaque?.image.url" :alt="attaque?.nom" />
             {{ attaque?.nom }}: {{ attaque?.description }}
             Dégâts: {{ attaque?.degats }}
-            Type de l'attaque: <span class="">{{ attaque?.typeDePokemon.nom }}</span>
+            Type de l'attaque: <span class="">{{ attaque?.typeDePokemon?.nom }}</span>
           </li>
         </ul>
       </section>
