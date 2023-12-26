@@ -88,16 +88,6 @@ async function selectPokemon(pokemonSlug: string) {
     };
   }
 };
-// cette fonction utilise la requête de la liste avec les images petites
-/* function selectPokemon(pokemonSlug: string) {
-  for (const pokemon of pokemons.value) {
-    console.log(pokemon.slug);
-    if (pokemon.slug === pokemonSlug) {
-      selectedPokemon.value = pokemon;
-      break;
-    };
-  }
-}; */
 
 // list of pokemon types
 const pokemonTypesQuery = gql`
@@ -169,7 +159,7 @@ const filteredPokemons = computed(() => {
       <ul v-if="filteredPokemons" class="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6">
         <li v-for="pokemon in filteredPokemons" :key="pokemon?.id">
           <button @click="selectPokemon(pokemon?.slug);"
-            class="hover:bg-yellow-500 hover:ring-8 hover:ring-yellow-400 hover:rounded-xl">
+            class="hover:bg-yellow-500 hover:ring-8 hover:ring-yellow-500 hover:rounded-xl">
             <NuxtImg :src="pokemon?.image.url" :alt="pokemon?.nom" />
             <h2 class="text-lg text-center">{{ pokemon?.nom }}</h2>
             <ul>
