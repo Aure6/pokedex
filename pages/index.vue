@@ -88,7 +88,6 @@ async function selectPokemon(pokemonSlug: string) {
     };
   }
 };
-
 // cette fonction utilise la requête de la liste avec les images petites
 /* function selectPokemon(pokemonSlug: string) {
   for (const pokemon of pokemons.value) {
@@ -120,7 +119,6 @@ async function getPokemonTypesData() {
 async function main() {
   const data = await getPokemonTypesData();
   pokemonTypes.value = data.value.typesDePokemon;
-  console.log(pokemonTypes.value);
 }
 main();
 
