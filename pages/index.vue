@@ -186,7 +186,7 @@ defineProps(['selectedType']);
       <div class="text-justify text-red-950">Taille: {{ selectedPokemon?.height }} mètres</div>
       <div class="text-justify text-red-950">Masse: {{ selectedPokemon?.mass }} kg</div>
       <div class="text-justify text-red-950">Couleur (hex): {{ selectedPokemon?.color.hex }}</div>
-      <!-- ajouter la couleur dans tsconfig.json pour pouvoir la charger dynamiquement, sinon se servir d'une balise html "style" inline remplie de CSS pure -->
+      <!-- ajouter la couleur dans tsconfig.json pour pouvoir la charger dynamiquement, sinon se servir d'une balise html "style" inline remplie de CSS pure (:style) -->
       <div class="w-6 h-6" :class="`bg-[${selectedPokemon?.color.hex}]`"
         :style="{ 'background-color': selectedPokemon?.color.css }">
       </div>
