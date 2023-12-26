@@ -24,10 +24,14 @@ const query = gql`
     height
     color {
       hex
+      css
     }
     typesDePokemon {
       id
       nom
+      couleur {
+        css
+      }
     }
     attaques {
       nom
@@ -143,14 +147,16 @@ main();
         <div class="mx-auto space-y-4">
           <label class="block">
             Rechercher par nom de pokémon:
-            <input class="w-full p-1 bg-yellow-500 rounded-lg sm:w-auto" type="search" id="query" autofocus
+            <input class="w-full p-1 bg-yellow-500 rounded-lg sm:w-auto" type="search" id="searchQuery" autofocus
               placeholder="Nom du pokémon" />
           </label>
           <!-- TODO dropdown type de pokemons -->
           <label class="block">
             Type de pokémon:
             <select id="type_de_pokemon" name="type_de_pokemon" class="p-1 bg-yellow-500 rounded-lg">
-              <option v-for="pokemonType in pokemonTypes" :key="pokemonType.id" :value="pokemonType.id">
+              <option>Tout type</option>
+              <option v-for="pokemonType in pokemonTypes" :key="pokemonType.id" :value="pokemonType.id"
+                :style="{ 'background-color': pokemonType.couleur.css }">
                 {{ pokemonType.nom }}
               </option>
             </select>
@@ -165,8 +171,8 @@ main();
             <NuxtImg :src="pokemon?.image.url" :alt="pokemon?.nom" />
             <h2 class="text-lg text-center">{{ pokemon?.nom }}</h2>
             <ul>
-              <li v-for="cat in pokemon?.typesDePokemon" :key="cat?.id"
-                class="inline-block w-auto p-1 text-justify bg-yellow-400 rounded-lg text-red-950">
+              <li v-for="cat in pokemon?.typesDePokemon" :key="cat?.id" :style="{ 'background-color': cat.couleur.css }"
+                class="inline-block w-auto p-1 text-justify rounded-lg text-red-950">
                 {{ cat?.nom }}
               </li>
             </ul>
