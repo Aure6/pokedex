@@ -113,30 +113,18 @@ query pokemonTypesQuery {
 }
 `;
 const pokemonTypes = ref();
-// const { pokemonTypesData }: any = await useAsyncQuery(pokemonTypesQuery);
-// console.log(pokemonTypesData.value);
-// console.log(pokemonTypesQuery.value);
-// pokemonTypes.value = pokemonTypesData.value.typesDePokemon;
-
-// Declare an async function that returns a promise
 async function getPokemonTypesData() {
-  // Wait for the query to finish and get the data
   const { data }: any = await useAsyncQuery(pokemonTypesQuery);
-  // Return the data
   return data;
 }
-
-// Call the async function and use the data
 async function main() {
-  // Wait for the data to be available
   const data = await getPokemonTypesData();
-  // Use the data
   pokemonTypes.value = data.value.typesDePokemon;
   console.log(pokemonTypes.value);
 }
-
-// Invoke the main function
 main();
+
+defineProps(['selectedType']);
 </script>
 
 <template>
@@ -147,13 +135,13 @@ main();
         <div class="mx-auto space-y-4">
           <label class="block">
             Rechercher par nom de pokémon:
-            <input class="w-full p-1 bg-yellow-500 rounded-lg sm:w-auto" type="search" id="searchQuery" autofocus
-              placeholder="Nom du pokémon" />
+            <input class="w-full p-1 placeholder-gray-400 bg-yellow-500 rounded-lg sm:w-auto" type="search"
+              id="searchQuery" autofocus placeholder="Nom du pokémon" />
           </label>
           <!-- TODO dropdown type de pokemons -->
           <label class="block">
             Type de pokémon:
-            <select id="type_de_pokemon" name="type_de_pokemon" class="p-1 bg-yellow-500 rounded-lg">
+            <select model="selectedType" id="type_de_pokemon" name="type_de_pokemon" class="p-1 bg-yellow-500 rounded-lg">
               <option>Tout type</option>
               <option v-for="pokemonType in pokemonTypes" :key="pokemonType.id" :value="pokemonType.id"
                 :style="{ 'background-color': pokemonType.couleur.css }">
@@ -201,7 +189,9 @@ main();
       <div class="text-justify text-red-950">Masse: {{ selectedPokemon?.mass }} kg</div>
       <div class="text-justify text-red-950">Couleur (hex): {{ selectedPokemon?.color.hex }}</div>
       <!-- ajouter la couleur dans tsconfig.json pour pouvoir la charger dynamiquement, sinon se servir d'une balise html "style" inline remplie de CSS pure -->
-      <div class="w-6 h-6" :class="`bg-[${selectedPokemon?.color.hex}]`"></div>
+      <div class="w-6 h-6" :class="`bg-[${selectedPokemon?.color.hex}]`"
+        :style="{ 'background-color': selectedPokemon?.color.css }">
+      </div>
       <div class="text-justify text-red-950">Points de vie: {{ selectedPokemon?.pointDeVie }}</div>
       <!-- v-for pour les types de pokemon -->
       <section>
