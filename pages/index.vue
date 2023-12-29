@@ -120,11 +120,8 @@ const updateSelectedType = (event: { target: any }) => {
 };
 const filteredPokemons = computed(() => {
   return pokemons.value.filter((pokemon: { typesDePokemon: any[]; nom: string; }) => {
-    // Filtrage par type
     const filterByType = selectedType.value === 'Tout type' || pokemon.typesDePokemon.some((type: { id: string; }) => type.id === selectedType.value);
-    // Filtrage par nom
     const filterByName = !searchQuery.value || pokemon.nom.toLowerCase().includes(searchQuery.value.toLowerCase());
-    // Appliquer les deux filtres
     return filterByType && filterByName;
   });
 });
@@ -133,7 +130,7 @@ const filteredPokemons = computed(() => {
 <template>
   <div class="flex flex-col gap-8 sm:flex-row">
     <div class="space-y-4 sm:w-1/2">
-      <!-- TODO Search bar -->
+      <!-- Search bar -->
       <div class="flex flex-col justify-center gap-4 2xl:flex-row ">
         <div class="mx-auto space-y-4">
           <label class="block">
@@ -182,8 +179,6 @@ const filteredPokemons = computed(() => {
       <h2 class="text-3xl font-extrabold text-justify uppercase text-red-950">{{
         selectedPokemon?.nom }}
       </h2>
-      <!-- <NuxtImg :src="selectedPokemon?.image.url" :alt="selectedPokemon?.nom" /> -->
-      <!-- the selectedPokemonImage reference displays the larger image for the selected pokemon from the query that gets a larger image -->
       <NuxtImg v-if="selectedPokemonImage" :src="selectedPokemonImage.url" :alt="selectedPokemon?.nom" />
       <div v-else>
         L'image en haute définition est en cours de chargement...
