@@ -164,7 +164,7 @@ const filteredPokemons = computed(() => {
             <h2 class="text-lg text-center">{{ pokemon?.nom }}</h2>
             <ul>
               <li v-for="cat in pokemon?.typesDePokemon" :key="cat?.id" :style="{ 'background-color': cat.couleur.css }"
-                class="inline-block w-auto p-1 text-justify rounded-lg text-red-950">
+                class="inline-block w-auto p-1 text-justify rounded-lg text-red-950 uppercase">
                 {{ cat?.nom }}
               </li>
             </ul>
