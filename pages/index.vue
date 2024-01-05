@@ -189,7 +189,7 @@ const filteredPokemons = computed(() => {
         </div>
         <div class="text-justify text-red-950">Points de vie: {{ selectedPokemon?.pointDeVie }}</div>
         <section>
-          <p class="text-justify text-red-950 text-lg">Type(s) du pokemon: {{ selectedPokemon?.typesDePokemon?.nom }}</p>
+          <p class="text-justify text-red-950 text-lg">Type(s) du pokemon: </p>
           <ul class="list-disc">
             <li v-for="cat in selectedPokemon?.typesDePokemon" :key="cat?.id" class="text-justify text-red-950">
               {{ cat?.nom }}
@@ -197,8 +197,7 @@ const filteredPokemons = computed(() => {
           </ul>
         </section>
         <section>
-          <div class="text-justify text-red-950 text-lg">Attaque(s) du pokémon: {{ selectedPokemon?.typesDePokemon?.nom }}
-          </div>
+          <div class="text-justify text-red-950 text-lg">Attaque(s) du pokémon: </div>
           <ul class="list-disc">
             <li v-for="attaque in selectedPokemon?.attaques" :key="attaque?.id" class="text-justify text-red-950">
               <NuxtImg class="inline-flex rounded-lg shadow-2xl" :src="attaque?.image.url" :alt="attaque?.nom" />
