@@ -74,8 +74,6 @@ query Pokemon($slug: String!) {
 `;
 const selectedPokemon = ref();
 const selectedPokemonImage = ref();
-
-// cette fonction utilise la requête de la liste avec les images petites
 async function selectPokemon(pokemonSlug: string) {
   for (const pokemon of pokemons.value) {
     if (pokemon.slug === pokemonSlug) {
@@ -138,7 +136,7 @@ const filteredPokemons = computed(() => {
             <input v-model="searchQuery" class="w-full p-1 placeholder-gray-400 bg-yellow-500 rounded-lg sm:w-auto"
               type="search" id="searchQuery" autofocus placeholder="Nom du pokémon" />
           </label>
-          <!-- dropdown type de pokemons -->
+          <!-- dropdown type de pokémons -->
           <label class="block">
             Type de pokémon:
             <select @change="updateSelectedType" id="type_de_pokemon" name="type_de_pokemon"
@@ -152,7 +150,7 @@ const filteredPokemons = computed(() => {
           </label>
         </div>
       </div>
-      <!-- list of pokemons -->
+      <!-- list of pokémons -->
       <ul v-if="filteredPokemons" class="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6">
         <li v-for="pokemon in filteredPokemons" :key="pokemon?.id">
           <button @click="selectPokemon(pokemon?.slug);"
@@ -171,10 +169,7 @@ const filteredPokemons = computed(() => {
       <ul v-else>
         <li>Loading...</li>
       </ul>
-    </div>
-    <!-- selected pokemon div -->
-    <!-- this div is hidden until a pokemon is selected -->
-    <!-- when a pokemon is selected this div shows its data -->
+    </div>>
     <div v-if="selectedPokemon" class="flex flex-col items-center order-first mx-auto space-y-4 sm:w-1/2 sm:order-none">
       <h2 class="text-3xl font-extrabold text-justify uppercase text-red-950">{{
         selectedPokemon?.nom }}
@@ -193,7 +188,6 @@ const filteredPokemons = computed(() => {
           :style="{ 'background-color': selectedPokemon?.color.css }">
         </div>
         <div class="text-justify text-red-950">Points de vie: {{ selectedPokemon?.pointDeVie }}</div>
-        <!-- v-for pour les types de pokemon -->
         <section>
           <p class="text-justify text-red-950 text-lg">Type(s) du pokemon: {{ selectedPokemon?.typesDePokemon?.nom }}</p>
           <ul class="list-disc">
@@ -202,7 +196,6 @@ const filteredPokemons = computed(() => {
             </li>
           </ul>
         </section>
-        <!-- v-for pour les attaques -->
         <section>
           <div class="text-justify text-red-950 text-lg">Attaque(s) du pokémon: {{ selectedPokemon?.typesDePokemon?.nom }}
           </div>
