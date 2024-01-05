@@ -169,7 +169,7 @@ const filteredPokemons = computed(() => {
       <ul v-else>
         <li>Loading...</li>
       </ul>
-    </div>>
+    </div>
     <div v-if="selectedPokemon" class="flex flex-col items-center order-first mx-auto space-y-4 sm:w-1/2 sm:order-none">
       <h2 class="text-3xl font-extrabold text-justify uppercase text-red-950">{{
         selectedPokemon?.nom }}
