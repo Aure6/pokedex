@@ -181,14 +181,38 @@ const filteredPokemons = computed(() => {
       </div>
       <div class="space-y-4">
         <div class="text-justify text-red-950">{{ selectedPokemon?.description }}</div>
-        <div class="text-justify text-red-950">Taille: {{ selectedPokemon?.height }} mètres</div>
-        <div class="text-justify text-red-950">Masse: {{ selectedPokemon?.mass }} kg</div>
-        <div class="text-justify text-red-950">Couleur (hex): {{ selectedPokemon?.color.hex }}</div>
-        <!-- ajouter la couleur dans tsconfig.json pour pouvoir la charger dynamiquement, sinon se servir d'une balise html "style" inline remplie de CSS pure (:style) -->
-        <div class="w-6 h-6" :class="`bg-[${selectedPokemon?.color.hex}]`"
-          :style="{ 'background-color': selectedPokemon?.color.css }">
+        <div class="flex justify-evenly">
+          <div class="text-justify text-red-950">
+            <div class="text-center">
+              {{ selectedPokemon?.height }} mètres
+            </div>
+            <div class="text-sm text-center">
+              Taille
+            </div>
+          </div>
+          <div class="text-justify text-red-950">
+            <div class="text-center">
+              {{ selectedPokemon?.mass }} kg
+            </div>
+            <div class="text-sm text-center">
+              Poids
+            </div>
+          </div>
+          <div class="text-justify text-red-950">
+            <div class="text-center">
+              {{ selectedPokemon?.pointDeVie }}
+            </div>
+            <div class="text-sm text-center">
+              Points de vie
+            </div>
+          </div>
         </div>
-        <div class="text-justify text-red-950">Points de vie: {{ selectedPokemon?.pointDeVie }}</div>
+        <div class="text-justify text-red-950">Couleur (hex): {{ selectedPokemon?.color.hex }}
+          <!-- ajouter la couleur dans tsconfig.json pour pouvoir la charger dynamiquement, ou bien se servir d'une balise html "style" inline remplie de CSS pure (:style) -->
+          <div class="inline-block w-12 h-6" :class="`bg-[${selectedPokemon?.color.hex}]`"
+            :style="{ 'background-color': selectedPokemon?.color.css }">
+          </div>
+        </div>
         <section>
           <p class="text-lg text-justify text-red-950">Type(s) du pokemon: </p>
           <ul class="list-disc">
