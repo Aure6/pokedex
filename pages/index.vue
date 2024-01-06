@@ -131,13 +131,13 @@ const filteredPokemons = computed(() => {
       <!-- Search bar -->
       <div class="flex flex-col justify-center gap-4 2xl:flex-row ">
         <div class="mx-auto space-y-4">
-          <label class="block">
+          <label class="block text-red-950">
             Rechercher par nom de pokémon:
             <input v-model="searchQuery" class="w-full p-1 placeholder-gray-400 bg-yellow-500 rounded-lg sm:w-auto"
               type="search" id="searchQuery" autofocus placeholder="Nom du pokémon" />
           </label>
           <!-- dropdown type de pokémons -->
-          <label class="block">
+          <label class="block text-red-950">
             Type de pokémon:
             <select @change="updateSelectedType" id="type_de_pokemon" name="type_de_pokemon"
               class="p-1 bg-yellow-500 rounded-lg">
@@ -151,15 +151,16 @@ const filteredPokemons = computed(() => {
         </div>
       </div>
       <!-- list of pokémons -->
-      <ul v-if="filteredPokemons" class="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6">
-        <li v-for="pokemon in filteredPokemons" :key="pokemon?.id">
-          <button @click="selectPokemon(pokemon?.slug);"
-            class="hover:bg-yellow-500 hover:ring-8 hover:ring-yellow-500 hover:rounded-xl">
-            <NuxtImg :src="pokemon?.image.url" :alt="pokemon?.nom" />
+      <ul v-if="filteredPokemons"
+        class="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6 lg:gap-4 2xl:gap-6">
+        <li v-for="pokemon in filteredPokemons" :key="pokemon?.id" class="block mx-auto">
+          <button @click=" selectPokemon(pokemon?.slug);" :style="{ 'background-color': pokemon.color.css }"
+            class="flex flex-col items-center p-2 duration-75 hover:scale-105 rounded-xl hover:bg-yellow-500 hover:ring-8 hover:ring-yellow-500 active:ring-yellow-700 text-red-50">
+            <NuxtImg :src="pokemon?.image.url" :alt="pokemon?.nom" class="text-center" />
             <h2 class="text-lg text-center">{{ pokemon?.nom }}</h2>
             <ul>
               <li v-for="cat in pokemon?.typesDePokemon" :key="cat?.id" :style="{ 'background-color': cat.couleur.css }"
-                class="inline-block w-auto p-1 text-justify rounded-lg text-red-950 uppercase">
+                class="inline-block w-auto p-1 text-sm text-justify uppercase rounded-lg text-red-50">
                 {{ cat?.nom }}
               </li>
             </ul>
@@ -189,7 +190,7 @@ const filteredPokemons = computed(() => {
         </div>
         <div class="text-justify text-red-950">Points de vie: {{ selectedPokemon?.pointDeVie }}</div>
         <section>
-          <p class="text-justify text-red-950 text-lg">Type(s) du pokemon: </p>
+          <p class="text-lg text-justify text-red-950">Type(s) du pokemon: </p>
           <ul class="list-disc">
             <li v-for="cat in selectedPokemon?.typesDePokemon" :key="cat?.id" class="text-justify text-red-950">
               {{ cat?.nom }}
@@ -197,7 +198,7 @@ const filteredPokemons = computed(() => {
           </ul>
         </section>
         <section>
-          <div class="text-justify text-red-950 text-lg">Attaque(s) du pokémon: </div>
+          <div class="text-lg text-justify text-red-950">Attaque(s) du pokémon: </div>
           <ul class="list-disc">
             <li v-for="attaque in selectedPokemon?.attaques" :key="attaque?.id" class="text-justify text-red-950">
               <NuxtImg class="inline-flex rounded-lg shadow-2xl" :src="attaque?.image.url" :alt="attaque?.nom" />
