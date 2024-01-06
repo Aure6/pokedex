@@ -133,7 +133,7 @@ const filteredPokemons = computed(() => {
         <div class="mx-auto space-y-4">
           <label class="block text-red-950">
             Rechercher par nom de pokémon:
-            <input v-model="searchQuery" class="w-full p-1 placeholder-gray-400 bg-yellow-500 rounded-lg sm:w-auto"
+            <input v-model="searchQuery" class="w-full p-1 placeholder-gray-500 bg-yellow-500 rounded-lg sm:w-auto"
               type="search" id="searchQuery" autofocus placeholder="Nom du pokémon" />
           </label>
           <!-- dropdown type de pokémons -->
