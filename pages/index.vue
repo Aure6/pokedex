@@ -155,7 +155,7 @@ const filteredPokemons = computed(() => {
         class="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-6 lg:gap-4 2xl:gap-6">
         <li v-for="pokemon in filteredPokemons" :key="pokemon?.id" class="block mx-auto">
           <button @click=" selectPokemon(pokemon?.slug);" :style="{ 'background-color': pokemon.color.css }"
-            class="flex flex-col items-center p-2 duration-75 rounded-lg hover:bg-yellow-500 hover:ring-8 hover:ring-yellow-500 active:ring-yellow-600 text-red-50">
+            class="flex flex-col items-center p-2 duration-75 rounded-lg hover:bg-yellow-500 hover:scale-105 hover:ring-8 hover:ring-yellow-500 active:ring-yellow-600 text-red-50">
             <NuxtImg :src="pokemon?.image.url" :alt="pokemon?.nom" class="text-center" />
             <h2 class="text-lg text-center">{{ pokemon?.nom }}</h2>
             <ul>
