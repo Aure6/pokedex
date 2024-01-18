@@ -17,7 +17,7 @@
         <Meta name="theme-color" content="#DC143C" />
     </Head>
 
-    <div class="min-h-screen bg-red-500">
+    <div class="min-h-screen bg-red-500 text-red-950">
         <nav
             class="container mx-auto px-3 h-24 flex items-center mb-4 shadow-2xl rounded-b-2xl bg-[radial-gradient(ellipse_at_left,_var(--tw-gradient-stops))] from-red-500 to-red-900 justify-center gap-4">
             <!-- there was mb-10 -->
