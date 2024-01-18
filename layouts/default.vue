@@ -4,14 +4,14 @@
         <Meta name="description"
             content="Explorez un Pokédex complet et interactif propulsé par IA. Découvrez des Pokémon uniques avec des informations détaillées et des images générées par intelligence artificielle." />
         <Meta property="og:description" content="Découverte Interactive de Pokémon | Pokédex Complet Alimenté par IA" />
-        <Meta property="og:image" content="https://nuxt-hygraph-example.vercel.app/img/Pokédex.webp" />
-        <Meta property="og:url" content="https://nuxt-hygraph-example.vercel.app/" />
+        <Meta property="og:image" content="https://nuxt-hygraph-example.vercel.app/img/Pokédex.webp" /><!-- TODO -->
+        <Meta property="og:url" content="https://pokedex-red-eight.vercel.app/" />
         <Meta property="og:type" content="website" />
         <Meta property="og:locale" content="fr_FR" />
         <Meta property="og:site_name" content="Pokédex IA" />
         <Meta name="twitter:card" content="summary_large_image" />
-        <Meta name="twitter:site" content="@CastorObese" />
-        <Meta name="twitter:creator" content="@CastorObese" />
+        <!-- <Meta name="twitter:site" content="@" />
+        <Meta name="twitter:creator" content="@" /> -->
         <Meta name="twitter:title" content="Pokédex IA" />
         <Meta name="twitter:description" content="Découverte Interactive de Pokémon | Pokédex Complet Alimenté par IA" />
         <Meta name="theme-color" content="#DC143C" />
